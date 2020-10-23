@@ -66,8 +66,7 @@ export default function CreateOrphanage() {
 
     await api.post('/orphanages', data);
 
-    alert('All Done!');
-    history.push('/app');
+    history.push('/orphanages/orphanage-created');
   }
 
   return (
@@ -81,7 +80,7 @@ export default function CreateOrphanage() {
             <legend>Dados</legend>
 
             <Map 
-              center={[-27.2092052,-49.6401092]} 
+              center={[-43.5320677,172.6381334]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onClick={handleMapClick}
@@ -186,12 +185,10 @@ export default function CreateOrphanage() {
           </fieldset>
 
           <button className="confirm-button" type="submit">
-            Confirmar
+            Confirm
           </button>
         </form>
       </main>
     </div>
   );
 }
-
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;

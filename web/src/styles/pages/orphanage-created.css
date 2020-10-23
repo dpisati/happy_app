@@ -1,0 +1,54 @@
+.container {
+    background-color: #37C77F;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero {
+    display: flex;
+    width: 90%;
+    height: 70%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 15%;
+}
+
+.left {
+    text-align: center;
+    padding: 0 80px;;
+}
+
+.left h1 {
+    font-size: 6rem;
+    margin: 50px 0;
+}
+
+.left p {
+    font-size: 2rem;
+    margin: 50px 0;
+}
+
+.left button {
+    margin: 50px 0;
+    height: 64px;
+    width: 300px;
+    border: none;
+    border-radius: 20px;
+    background-color: #31B272;
+    color: #FFF;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.left button:hover {
+    background-color: #3BD689;
+}
+
+@media (max-width: 950px) {
+    .right {
+        display: none;
+    }
+}
