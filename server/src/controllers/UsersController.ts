@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
 import Users from '../models/Users';
 import * as Yup from 'yup';
+import usersView from '../views/users_view';
 
 import bcrypt from 'bcrypt';
 
@@ -18,7 +19,7 @@ export default {
 
         const user = await userRepository.findOneOrFail(id);
 
-        return res.json(user);
+        return res.json(usersView.render(user));
     },
 
     async create(req: Request, res: Response) {
@@ -61,6 +62,7 @@ export default {
         const user = userRepository.create(data);
      
         await userRepository.save(user);   
-        return res.status(201).json(user);
+
+        return res.status(201).json(usersView.render(user));
     }
 }
