@@ -39,6 +39,15 @@ export default {
             createdAt: new Date()
         };
 
+        const emailInUse = await getRepository(Users)
+            .createQueryBuilder("user")
+            .where("user.email = :email", { email: email })
+            .getOne();
+
+        if(emailInUse) {
+            return res.status(500).json({ message: "Email already in use"});
+        }
+
         const schema = Yup.object().shape({
             name: Yup.string().required(),
             email: Yup.string().required(),
