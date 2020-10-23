@@ -43,8 +43,8 @@ export default function OrphanagesMap() {
           initialRegion={{ 
             latitude: -43.5309368,
             longitude: 172.636626,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
+            latitudeDelta: 0.007,
+            longitudeDelta: 0.007
            }} 
         >
           { orphanages.map(orphanage => {
@@ -53,8 +53,8 @@ export default function OrphanagesMap() {
               key={orphanage.id}
               icon={mapMarker}
               calloutAnchor={{ 
-                x: 2.3,
-                y: 0.68,
+                x: 2.6,
+                y: 0.8,
               }}
               coordinate={{ 
                 latitude: orphanage.latitude,
