@@ -6,6 +6,12 @@ import usersView from '../views/users_view';
 
 import bcrypt from 'bcrypt';
 
+interface User {
+    name: string;
+    email: string;
+    password: string;
+}
+
 export default {
     async index(req: Request, res: Response) {
         const userRepository = getRepository(Users);
@@ -59,10 +65,32 @@ export default {
             abortEarly: false,
         });
      
-        const user = userRepository.create(data);
+        const user = userRepository.create(data as User);
      
-        await userRepository.save(user);   
-
+        await userRepository.save(user);
+        
         return res.status(201).json(usersView.render(user));
+    },
+
+    async login(req: Request, res: Response) {
+        const {
+            email,
+            password,
+        } = req.body;
+
+        const user = await getRepository(Users)
+            .createQueryBuilder("user")
+            .where("user.email = :email", { email: email })
+            .getOne();
+        
+        if(user) {
+            const match = await bcrypt.compare(password, user.password);
+            if(match) {
+                return res.json({message: "Correct Password", user: {name: user.name }});
+            }
+            return res.json({message: "Email or password not valid - 02"});
+        }        
+
+        return res.json({ message: "Email or password not valid - 01"})
     }
 }
