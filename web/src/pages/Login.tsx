@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useEffect } from 'react';
 
 import fullLogo from '../images/happyFullLogo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
-import { useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 
 import '../styles/pages/login.css';
 import api from '../services/api';
@@ -32,7 +32,10 @@ export default function Login() {
             localStorage.setItem('password', password as string);
         }
         localStorage.setItem('email', email as string);
-        await api.post('/api/user/login', data);
+        
+        await api.post('/api/user/login', data).then((res) => {
+            localStorage.setItem('token', res.data.user.token);
+        });        
 
         history.push('/app');
     }
@@ -61,8 +64,13 @@ export default function Login() {
                         <FiArrowLeft size={20} color="15C3D6"/>
                     </button>
                 </header>
-                <form onSubmit={handleSumbmit} autoComplete="new-password">
-                    <h1>Login</h1>
+                <form className="login-form" onSubmit={handleSumbmit} autoComplete="new-password">
+                    <div className="orRegister">
+                        <h1>Login</h1>
+                        <Link to="/auth/register" className="register">
+                            Register
+                        </Link>
+                    </div>
 
                     <label htmlFor="email">E-mail</label>
                     <input id="email" value={email} onChange={e => setEmail(e.target.value)} />

@@ -47,7 +47,7 @@ export default function Register() {
                         <FiArrowLeft size={20} color="15C3D6"/>
                     </button>
                 </header>
-                <form onSubmit={handleSumbmit}>
+                <form className="login-form" onSubmit={handleSumbmit}>
                     <h1>Register</h1>
 
                     <label htmlFor="name">Name</label>

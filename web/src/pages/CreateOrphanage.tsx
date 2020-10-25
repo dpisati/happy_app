@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
+import React, { FormEvent, useState, ChangeEvent } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { useHistory, Redirect } from "react-router-dom";
@@ -64,7 +64,12 @@ export default function CreateOrphanage() {
       data.append('images', image);
     })
 
-    await api.post('/orphanages', data);
+    await api.post('/orphanages', data, {
+      headers: {
+          'auth-token': localStorage.token
+        }
+      }
+    );
 
     history.push('/orphanages/orphanage-created');
   }
@@ -75,8 +80,6 @@ export default function CreateOrphanage() {
       <Redirect to="/auth/login" />
     );
   }
-
-
 
   return (
     <div id="page-create-orphanage">
