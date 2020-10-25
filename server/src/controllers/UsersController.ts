@@ -4,6 +4,8 @@ import Users from '../models/Users';
 import * as Yup from 'yup';
 import usersView from '../views/users_view';
 
+import jwt from 'jsonwebtoken';
+
 import bcrypt from 'bcrypt';
 
 interface User {
@@ -86,11 +88,11 @@ export default {
         if(user) {
             const match = await bcrypt.compare(password, user.password);
             if(match) {
-                return res.json({message: "Correct Password", user: {name: user.name }});
+                const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET as string);
+                return res.status(200).header('auth-token', token).json({message: "Correct Password", user: {name: user.name }});
             }
-            return res.json({message: "Email or password not valid - 02"});
-        }        
-
-        return res.json({ message: "Email or password not valid - 01"})
+            return res.status(400).json({message: "Email or password not valid - 02"});
+        }
+        return res.status(400).json({ message: "Email or password not valid - 01"})
     }
 }
