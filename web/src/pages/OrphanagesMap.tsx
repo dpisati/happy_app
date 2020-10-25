@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiPlus, FiArrowRight } from 'react-icons/fi';
+import { FiPlus, FiArrowRight, FiBookOpen } from 'react-icons/fi';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
 import mapIcon from "../utils/mapIcon";
@@ -70,6 +70,9 @@ function OrphanagesMap() {
 
                 <Link to="/orphanages/create" className="create-orphanage">
                     <FiPlus size={32} color="#FFF"/>
+                </Link>
+                <Link to="/dashboard" className="dashboard-icon">
+                    <FiBookOpen size={32} color="#FFF"/>
                 </Link>
 
         </div>

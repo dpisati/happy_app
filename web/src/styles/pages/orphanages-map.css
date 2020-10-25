@@ -42,7 +42,7 @@
     font-weight: 800;
 }
 
-#page-map .create-orphanage {
+#page-map .create-orphanage  {
     z-index: 10;
     position:absolute;
     right: 40px;
@@ -57,7 +57,23 @@
     transition: background-color 0.2s;
 }
 
-#page-map .create-orphanage:hover {
+.dashboard-icon {
+    z-index: 10;
+    position:absolute;
+    right: 40px;
+    bottom: 120px;
+    width: 64px;
+    height: 64px;
+    background: #15c3d6;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+#page-map .create-orphanage:hover,
+#page-map .dashboard-icon:hover {
     background: #17d5eb;
 }
 

@@ -8,6 +8,7 @@ import CreateOrphanage from './pages/CreateOrphanage';
 import OrphanageCreated from './pages/OrphanageCreated';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
 
 function Routes() {
     return(
@@ -22,6 +23,8 @@ function Routes() {
 
                 <Route path="/auth/login" component={Login} />
                 <Route path="/auth/register" component={Register} />
+                
+                <Route path="/dashboard" component={Dashboard} />
             </Switch>
         </BrowserRouter>
     );

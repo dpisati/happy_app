@@ -1,0 +1,114 @@
+aside.app-sidebar .middle-icon a,
+aside.app-sidebar .middle-icon button {
+ width: 48px;
+ height: 48px;
+ position: relative;
+
+ border: 0;
+
+ background: #12AFCB;
+ border-radius: 16px;
+
+ cursor: pointer;
+
+ transition: background-color 0.2s;
+
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+aside.app-sidebar .middle-icon a:hover,
+aside.app-sidebar .middle-icon button:hover {
+ background: #17D6EB;
+}
+
+.location {
+    background: #FFD666 !important;
+    margin-bottom: 15px;
+}
+
+.location:hover {
+    background: rgb(255, 239, 194) !important;
+}
+
+.alert {
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    background: #FFD666;
+    border-radius: 50%;
+    border: 2px solid #12AFCB;
+    right: 7px;
+    top: 9px;
+}
+
+.dashboard {    
+    /* margin-left: 95px; */
+    /* padding-left: 50px 100px; */
+    width: 80%;
+    padding-top: 65px;
+    padding-left: 95px;
+    margin: auto;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4D6F80;
+    padding: 30px 0px;
+    border-bottom: 1px solid rgb(108, 152, 173, 0.2);
+}
+
+.head h2 {
+    margin-bottom: -5px;
+}
+
+.orphanages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.map-container {
+    width: 45%;
+    
+    margin-top: 64px;
+    background: #FFF;
+    border: 1px solid #B3DAE2;
+    border-radius: 20px;
+  }
+  
+  .map-container footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0px 30px;
+    padding: 20px 0;
+    text-align: center;
+    color: #4D6F80;
+  }
+  
+  .map-container .leaflet-container {
+    border-bottom: 1px solid #DDE3F0;
+    border-radius: 20px 20px 0px 0px;
+  }
+
+  .edit button {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      border: none;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+  }
+
+  .edit button:hover {
+    background: rgb(211, 241, 255);
+  }
+
+  footer h3 {
+      cursor: pointer;
+  }

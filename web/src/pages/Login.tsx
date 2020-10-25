@@ -2,7 +2,7 @@ import React, { useState, FormEvent, useEffect } from 'react';
 
 import fullLogo from '../images/happyFullLogo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import '../styles/pages/login.css';
 import api from '../services/api';
@@ -37,7 +37,7 @@ export default function Login() {
             localStorage.setItem('token', res.data.user.token);
         });        
 
-        history.push('/app');
+        history.push('/dashboard');
     }
 
     useEffect(() => {
