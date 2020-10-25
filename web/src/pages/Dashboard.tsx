@@ -36,7 +36,7 @@ export default function Dashborad() {
             <aside className="app-sidebar">
                 <img src={mapMarkerImg} alt="Happy" />
                 <div className="middle-icon">
-                    <button type="button" className="location" onClick={handleToMapPage}>
+                    <button type="button" className="location-icon" onClick={handleToMapPage}>
                         <HiOutlineLocationMarker size={28} color="#0089A5" />
                     </button>
 

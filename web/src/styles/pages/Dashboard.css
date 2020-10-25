@@ -23,12 +23,12 @@ aside.app-sidebar .middle-icon button:hover {
  background: #17D6EB;
 }
 
-.location {
+.location-icon {
     background: #FFD666 !important;
     margin-bottom: 15px;
 }
 
-.location:hover {
+.location-icon:hover {
     background: rgb(255, 239, 194) !important;
 }
 
