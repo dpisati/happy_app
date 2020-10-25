@@ -1,11 +1,11 @@
-main {
+.login {
     display: flex;
     color: #5C8599;
     background-color: #FFF;
     width: 100vw;
 }
 
-.left {
+.login .left {
     background-color: #15C3D6;
     width:60%;
     height: 100vh;
@@ -15,16 +15,16 @@ main {
     align-items: center;
 }
 
-.left img {
+.login .left img {
     margin-bottom: 50px;
 }
 
-.left h1 {
+.login .left h1 {
     font-size: 2rem;
     margin-bottom: 5px;
 }
 
-.left h2 {
+.login .left h2 {
     font-size: 1.3rem;
     margin-bottom: 50px;
 }
@@ -33,7 +33,7 @@ main {
     width: 40%;
 }
 
-header {
+.right header {
     display: flex;
     align-items: center;
     justify-content: flex-end;

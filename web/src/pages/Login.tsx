@@ -1,19 +1,38 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 
 import fullLogo from '../images/happyFullLogo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
-import '../styles/pages/login.css';
 import { useHistory } from 'react-router-dom';
+
+import '../styles/pages/login.css';
+import api from '../services/api';
 
 export default function Login() {
     const history = useHistory();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     function handleToMapPage() {
         history.push('/app')
     }
 
+    async function handleSumbmit(event: FormEvent) {
+        event.preventDefault();
+
+        const data = {
+            email,
+            password
+        }
+
+        await api.post('/api/user/login', data);
+
+        history.push('/app');
+    }
+
+
     return (
-        <main>
+        <main className="login">
             <div className="left">
                 <div className="left-content">
                     <img src={fullLogo} alt="Happy Face"/>
@@ -28,14 +47,14 @@ export default function Login() {
                         <FiArrowLeft size={20} color="15C3D6"/>
                     </button>
                 </header>
-                <form action="">
+                <form onSubmit={handleSumbmit}>
                     <h1>Login</h1>
 
-                    <label htmlFor="">E-mail</label>
-                    <input type="text"/>
+                    <label htmlFor="email">E-mail</label>
+                    <input id="email" value={email} onChange={e => setEmail(e.target.value)} />
                     
                     <label htmlFor="">Password</label>
-                    <input type="text"/>
+                    <input id="password" type="password" value={password} onChange={e => setPassword(e.target.value)} />
 
                     <div className="login-options">
                         <div className="remember">
@@ -47,7 +66,7 @@ export default function Login() {
                         <p>Forgot my password</p>
                     </div>
 
-                    <button>
+                    <button type="submit">
                         Enter
                     </button>
                 </form>
