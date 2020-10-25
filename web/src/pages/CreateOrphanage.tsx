@@ -1,7 +1,7 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 
 import { FiPlus } from "react-icons/fi";
@@ -68,6 +68,15 @@ export default function CreateOrphanage() {
 
     history.push('/orphanages/orphanage-created');
   }
+
+
+  if(!localStorage.email) {
+    return (
+      <Redirect to="/auth/login" />
+    );
+  }
+
+
 
   return (
     <div id="page-create-orphanage">

@@ -12,5 +12,8 @@ routes.get("/orphanages", OrphanagesController.index);
 routes.get("/orphanages/:id", OrphanagesController.show);
 routes.post("/orphanages", verifyToken, upload.array('images'), OrphanagesController.create);
 
+// routes.get("/headers", (req, res) => {
+//     return res.json(req.headers);
+// });
 
 export default routes;

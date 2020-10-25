@@ -31,7 +31,7 @@ export default function Login() {
             localStorage.setItem('email', email as string);
             localStorage.setItem('password', password as string);
         }
-
+        localStorage.setItem('email', email as string);
         await api.post('/api/user/login', data);
 
         history.push('/app');
