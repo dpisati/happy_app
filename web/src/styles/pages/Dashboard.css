@@ -95,6 +95,10 @@ aside.app-sidebar .middle-icon button:hover {
     border-radius: 20px 20px 0px 0px;
   }
 
+  .edit {
+      display: flex;
+  }
+
   .edit button {
       width: 48px;
       height: 48px;
@@ -103,6 +107,9 @@ aside.app-sidebar .middle-icon button:hover {
       margin-left: 10px;
       cursor: pointer;
       transition: 0.2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 
   .edit button:hover {
