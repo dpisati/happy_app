@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, FormEvent, useEffect } from 'react';
 
 import fullLogo from '../images/happyFullLogo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -12,6 +12,7 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
 
     function handleToMapPage() {
         history.push('/app')
@@ -25,10 +26,23 @@ export default function Login() {
             password
         }
 
+        if(rememberMe) {
+            localStorage.setItem('rememberMe', 'true');
+            localStorage.setItem('email', email as string);
+            localStorage.setItem('password', password as string);
+        }
+
         await api.post('/api/user/login', data);
 
         history.push('/app');
     }
+
+    useEffect(() => {
+        if(localStorage.email && localStorage.password) {
+            setEmail(localStorage.email);
+            setPassword(localStorage.password);
+        }
+    }, [])
 
 
     return (
@@ -47,7 +61,7 @@ export default function Login() {
                         <FiArrowLeft size={20} color="15C3D6"/>
                     </button>
                 </header>
-                <form onSubmit={handleSumbmit}>
+                <form onSubmit={handleSumbmit} autoComplete="new-password">
                     <h1>Login</h1>
 
                     <label htmlFor="email">E-mail</label>
@@ -58,10 +72,10 @@ export default function Login() {
 
                     <div className="login-options">
                         <div className="remember">
-                            <input type="checkbox"/>
+                            <input type="checkbox"  defaultChecked={rememberMe} onChange={() => setRememberMe(!rememberMe)}/>
                             <span className="checkmark"></span>
 
-                            <label htmlFor="">Remember me</label>
+                            <label>Remember me</label>
                         </div>
                         <p>Forgot my password</p>
                     </div>
