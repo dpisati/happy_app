@@ -65,12 +65,12 @@ export default {
 
         await schema.validate(data, {
             abortEarly: false,
-        });
+        });        
      
         const user = userRepository.create(data as User);
      
         await userRepository.save(user);
-        
+       
         return res.status(201).json(usersView.render(user));
     },
 
@@ -89,7 +89,7 @@ export default {
             const match = await bcrypt.compare(password, user.password);
             if(match) {
                 const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET as string);
-                return res.status(200).header('auth-token', token).json({message: "Correct Password", user: {name: user.name, token }});
+                return res.status(200).header('auth-token', token).json({message: "Correct Password", user: {name: user.name, id: user.id, token }});
             }
             return res.status(400).json({message: "Email or password not valid - 02"});
         }

@@ -46,6 +46,10 @@ export class createOrphanages1602749671265 implements MigrationInterface {
             type: 'boolean',
             default: false,
           },
+          {
+            name: 'user_id',
+            type: 'integer'
+          }
         ]
       }))
   }

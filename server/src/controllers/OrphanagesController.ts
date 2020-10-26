@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, getConnection } from 'typeorm';
 import Orphanage from '../models/Orphanage';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
@@ -34,7 +34,8 @@ export default {
             about,
             instructions,
             opening_hours,
-            open_on_weekends
+            open_on_weekends,
+            user_id
         } = req.body;
      
         const orphanagesRepository = getRepository(Orphanage);
@@ -51,12 +52,14 @@ export default {
             about,
             instructions,
             opening_hours,
+            user_id,
             open_on_weekends: open_on_weekends === 'true',
             images
         };
 
         const schema = Yup.object().shape({
             name: Yup.string().required(),
+            user_id: Yup.number().required(),
             latitude: Yup.number().required(),
             longitude: Yup.number().required(),
             about: Yup.string().required().max(300),
@@ -77,5 +80,19 @@ export default {
      
         await orphanagesRepository.save(orphanage);   
         return res.status(201).json(orphanage);
-    }
+    },
+
+    async user(req: Request, res: Response) {
+        const { id } = req.params;
+        const orphanagesRepository = getRepository(Orphanage);
+
+        // const orphanage = await orphanagesRepository.findOneOrFail(id);
+        const firstUser = await 
+            getRepository(Orphanage)
+            .createQueryBuilder("orphanages")
+            .where("user_id = :id", { id })
+            .getMany();
+
+        return res.json(firstUser);
+    },
 }

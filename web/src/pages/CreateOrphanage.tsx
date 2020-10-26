@@ -50,6 +50,7 @@ export default function CreateOrphanage() {
     event.preventDefault();
 
     const { latitude, longitude } = position;
+    const user_id = localStorage.user_id
 
     const data = new FormData();
     data.append('name', name);
@@ -59,6 +60,7 @@ export default function CreateOrphanage() {
     data.append('instructions', instructions);
     data.append('opening_hours', openingHours);
     data.append('open_on_weekends', String(openOnWeekends));
+    data.append('user_id', user_id);
     
     images.forEach(image => {
       data.append('images', image);

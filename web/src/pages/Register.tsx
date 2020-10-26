@@ -26,7 +26,13 @@ export default function Register() {
             password
         }
 
-        await api.post('/api/user/register', data);
+        await api.post('/api/user/register', data).then((response) => {
+            api.post('/api/user/login', data).then((res) => {
+                localStorage.setItem('email', email as string);
+                localStorage.setItem('token', res.data.user.token);
+                localStorage.setItem('user_id', res.data.user.id);
+            });
+        });
 
         history.push('/app');
     }

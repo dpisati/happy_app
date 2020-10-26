@@ -23,7 +23,7 @@ export default function Login() {
 
         const data = {
             email,
-            password
+            password,
         }
 
         if(rememberMe) {
@@ -35,7 +35,8 @@ export default function Login() {
         
         await api.post('/api/user/login', data).then((res) => {
             localStorage.setItem('token', res.data.user.token);
-        });        
+            localStorage.setItem('user_id', res.data.user.id);
+        });
 
         history.push('/dashboard');
     }

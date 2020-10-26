@@ -71,7 +71,7 @@ aside.app-sidebar .middle-icon button:hover {
     justify-content: space-between;
 }
 
-.map-container {
+.map-container-user {
     width: 45%;
     
     margin-top: 64px;
@@ -80,7 +80,7 @@ aside.app-sidebar .middle-icon button:hover {
     border-radius: 20px;
   }
   
-  .map-container footer {
+  .map-container-user footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,7 +90,7 @@ aside.app-sidebar .middle-icon button:hover {
     color: #4D6F80;
   }
   
-  .map-container .leaflet-container {
+  .map-container-user .leaflet-container {
     border-bottom: 1px solid #DDE3F0;
     border-radius: 20px 20px 0px 0px;
   }
@@ -118,4 +118,12 @@ aside.app-sidebar .middle-icon button:hover {
 
   footer h3 {
       cursor: pointer;
+  }
+
+  .no-orphanages {
+      width: 100%;
+      height: 60vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
