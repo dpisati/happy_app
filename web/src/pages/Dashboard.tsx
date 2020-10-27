@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FiPower, FiAlertCircle, FiEdit3,  } from 'react-icons/fi';
 import { HiOutlineLocationMarker} from 'react-icons/hi';
 import { RiDeleteBin7Line } from 'react-icons/ri';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory, Redirect, Link } from 'react-router-dom';
 import { Map, Marker, TileLayer } from "react-leaflet";
 import api from "../services/api";
 
@@ -76,7 +76,7 @@ export default function Dashborad() {
 
                 <div className="orphanages">
 
-                    {orphanages.length == 0 && 
+                    {orphanages.length === 0 && 
                         <div className="no-orphanages">
                             <img src={noOrphanageImg} alt="No orphanages"/>
                         </div>
@@ -104,12 +104,12 @@ export default function Dashborad() {
                                 <footer>
                                     <h3>{orphanage.name}</h3>
                                     <div className="edit">
-                                        <button>
+                                        <Link className="button" to={`/orphanages/create/${orphanage.id}`}>
                                             <FiEdit3 size={28} color="#15C3D6" />
-                                        </button>
-                                        <button>
+                                        </Link>
+                                        <Link className="button" to={"/"}>
                                             <RiDeleteBin7Line size={28} color="#15C3D6"/>
-                                        </button>
+                                        </Link>
                                     </div>
                                 </footer>
                             </div>

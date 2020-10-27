@@ -17,7 +17,8 @@ function Routes() {
                 <Route path="/" exact component={Landing} />
                 <Route path="/app" component={OrphanagesMap} />
 
-                <Route path="/orphanages/create" component={CreateOrphanage} />
+                <Route path="/orphanages/create" exact component={CreateOrphanage} />
+                <Route path="/orphanages/create/:id"  component={CreateOrphanage} />
                 <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
                 <Route path="/orphanages/:id" component={Orphanage} />
 

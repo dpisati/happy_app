@@ -99,7 +99,7 @@ aside.app-sidebar .middle-icon button:hover {
       display: flex;
   }
 
-  .edit button {
+  .edit .button {
       width: 48px;
       height: 48px;
       border-radius: 16px;
@@ -110,9 +110,10 @@ aside.app-sidebar .middle-icon button:hover {
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #EBF2F5;
   }
 
-  .edit button:hover {
+  .edit .button:hover {
     background: rgb(211, 241, 255);
   }
 

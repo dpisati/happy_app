@@ -1,7 +1,7 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, useParams } from "react-router-dom";
 
 
 import { FiPlus } from "react-icons/fi";
@@ -11,7 +11,16 @@ import '../styles/pages/create-orphanage.css';
 import Sidebar from "../components/Sidebar";
 import api from "../services/api";
 
+interface OrphanageParams {
+  id: string;
+}
+
+interface ImageProps {
+  url: string;
+}
+
 export default function CreateOrphanage() {  
+  const params = useParams<OrphanageParams>();
   const history = useHistory();
 
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
@@ -23,6 +32,20 @@ export default function CreateOrphanage() {
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages ] = useState<string[]>([]);
 
+  
+  useEffect(() => {
+    if(params) {
+      api.get(`/orphanages/${params.id}`).then(res => {
+        setName(res.data.name);
+        setAbout(res.data.about);
+        setInstructions(res.data.instructions);
+        setOpeningHours(res.data.opening_hours);
+        setOpenOnWeekends(res.data.open_on_weekends);
+        setPreviewImages(res.data.images.map((image: ImageProps) => image.url));
+        setPosition({ latitude: res.data.latitude, longitude: res.data.longitude});
+      })      
+    }
+  }, [params.id])
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -92,9 +115,8 @@ export default function CreateOrphanage() {
         <form onSubmit={handleSumbmit} className="create-orphanage-form">
           <fieldset>
             <legend>Dados</legend>
-
             <Map 
-              center={[-43.5320677,172.6381334]} 
+              center={position ? [position.latitude, position.longitude] : [-43.5314368, 172.6346739]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onClick={handleMapClick}
