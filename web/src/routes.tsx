@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import OrphanagesMap from './pages/OrphanagesMap';
 import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage';
+import UpdateOrphanage from './pages/UpdateOrphanage';
 import OrphanageCreated from './pages/OrphanageCreated';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -18,7 +19,7 @@ function Routes() {
                 <Route path="/app" component={OrphanagesMap} />
 
                 <Route path="/orphanages/create" exact component={CreateOrphanage} />
-                <Route path="/orphanages/create/:id"  component={CreateOrphanage} />
+                <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
                 <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
                 <Route path="/orphanages/:id" component={Orphanage} />
 

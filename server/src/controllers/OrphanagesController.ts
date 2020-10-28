@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getRepository, getConnection } from 'typeorm';
 import Orphanage from '../models/Orphanage';
+import Image from '../models/Image';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
 
@@ -84,15 +85,68 @@ export default {
 
     async user(req: Request, res: Response) {
         const { id } = req.params;
-        const orphanagesRepository = getRepository(Orphanage);
-
-        // const orphanage = await orphanagesRepository.findOneOrFail(id);
-        const firstUser = await 
+        
+        const userOrphanages = await 
             getRepository(Orphanage)
             .createQueryBuilder("orphanages")
             .where("user_id = :id", { id })
             .getMany();
 
-        return res.json(firstUser);
+        return res.json(userOrphanages);
+    },
+
+    async update(req: Request, res: Response) {
+        const { id } = req.params;
+        const {
+            name,
+            latitude,
+            longitude,
+            about,
+            instructions,
+            opening_hours,
+            open_on_weekends,
+            user_id
+        } = req.body;
+
+        //////////////////////////////////////////////
+
+        const data = {
+            name,
+            latitude,
+            longitude,
+            about,
+            instructions,
+            opening_hours,
+            user_id,
+            open_on_weekends,
+        };
+        
+        const schema = Yup.object().shape({
+            name: Yup.string().required(),
+            user_id: Yup.number().required(),
+            latitude: Yup.number().required(),
+            longitude: Yup.number().required(),
+            about: Yup.string().required().max(300),
+            instructions: Yup.string().required(),
+            opening_hours: Yup.string().required(),
+            open_on_weekends: Yup.boolean().required(),
+            images: Yup.array(
+                Yup.object().shape({
+                    path: Yup.string().required()
+            }))
+        });
+
+        await schema.validate(data, {
+            abortEarly: false,
+        });
+      
+        await getConnection()
+            .createQueryBuilder()
+            .update(Orphanage)
+            .set(data)
+            .where("id = :id", { id })
+            .execute();
+                
+        return res.status(201).json({message: "Orphanage updated", data, imagesFromBody});
     },
 }

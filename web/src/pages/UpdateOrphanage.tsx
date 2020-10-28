@@ -19,7 +19,8 @@ interface ImageProps {
   url: string;
 }
 
-export default function CreateOrphanage() {  
+export default function UpdateOrphanage() {  
+  const params = useParams<OrphanageParams>();
   const history = useHistory();
 
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
@@ -31,7 +32,20 @@ export default function CreateOrphanage() {
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages ] = useState<string[]>([]);
 
-    function handleMapClick(event: LeafletMouseEvent) {
+  
+  useEffect(() => {
+    api.get(`/orphanages/${params.id}`).then(res => {
+      setName(res.data.name);
+      setAbout(res.data.about);
+      setInstructions(res.data.instructions);
+      setOpeningHours(res.data.opening_hours);
+      setOpenOnWeekends(res.data.open_on_weekends);
+      setPreviewImages(res.data.images.map((image: ImageProps) => image.url));
+      setPosition({ latitude: res.data.latitude, longitude: res.data.longitude});
+    })
+  }, [params.id])
+
+  function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
     setPosition({
       latitude: lat,
@@ -56,31 +70,44 @@ export default function CreateOrphanage() {
   async function handleSumbmit(event: FormEvent) {
     event.preventDefault();
 
-    const { latitude, longitude } = position;
-    const user_id = localStorage.user_id
+    // const { latitude, longitude } = position;
+    // const user_id = localStorage.user_id
 
-    const data = new FormData();
-    data.append('name', name);
-    data.append('about', about);
-    data.append('latitude', String(latitude));
-    data.append('longitude', String(longitude));
-    data.append('instructions', instructions);
-    data.append('opening_hours', openingHours);
-    data.append('open_on_weekends', String(openOnWeekends));
-    data.append('user_id', user_id);
+    const data = {
+      name,
+      about,
+      latitude: String(position.latitude), 
+      longitude: String(position.longitude),
+      instructions,
+      opening_hours: openingHours,
+      open_on_weekends: openOnWeekends,
+      user_id: localStorage.user_id,
+      images: images.forEach(image => {
+        images.push(image);
+      })
+
+    }
+
+    // const data = new FormData();
+    // data.append('name', name);
+    // data.append('about', about);
+    // data.append('latitude', String(latitude));
+    // data.append('longitude', String(longitude));
+    // data.append('instructions', instructions);
+    // data.append('opening_hours', openingHours);
+    // data.append('open_on_weekends', String(openOnWeekends));
+    // data.append('user_id', user_id);
     
-    images.forEach(image => {
-      data.append('images', image);
-    })
 
-    await api.post('/orphanages', data, {
+
+    await api.put(`/orphanages/id/${params.id}`, data, {
       headers: {
           'auth-token': localStorage.token
         }
       }
     );
 
-    history.push('/orphanages/orphanage-created');
+    history.push('/dashboard');
   }
 
 
@@ -100,7 +127,7 @@ export default function CreateOrphanage() {
           <fieldset>
             <legend>Dados</legend>
             <Map 
-              center={[-43.5314368, 172.6346739]}
+              center={[position.latitude, position.longitude]} 
               style={{ width: '100%', height: 280 }}
               zoom={15}
               onClick={handleMapClick}
@@ -108,16 +135,11 @@ export default function CreateOrphanage() {
               <TileLayer 
                 url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}
               />
-              
-              { position.latitude !== 0 && (
                 <Marker 
                   interactive={false} 
                   icon={mapIcon}
                   position={[position.latitude,position.longitude]} 
                 /> 
-                )
-              }
-
             </Map>
 
             <div className="input-block">
@@ -205,7 +227,7 @@ export default function CreateOrphanage() {
           </fieldset>
 
           <button className="confirm-button" type="submit">
-            Confirm
+            Update
           </button>
         </form>
       </main>
