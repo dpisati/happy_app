@@ -146,7 +146,9 @@ export default function CreateOrphanage() {
 
               {previewImages.map(image => {
                   return (
-                    <img key={image} src={image} alt={name}/>
+                    <div>
+                      <img key={image} src={image} alt={name}/>
+                    </div>
                   )
               })}
 
