@@ -108,7 +108,28 @@ export default {
             user_id
         } = req.body;
 
-        //////////////////////////////////////////////
+        const orphanagesRepository = getRepository(Orphanage);        
+
+        const requestImages = req.files as Express.Multer.File[];
+        const images = requestImages.map(image => {
+            return { path: image.filename }
+        });
+
+        function removeDateFromString(string: string) {
+            return string.substring(14);
+        }
+
+        const dan = []
+
+        const testNaming = images.map(image => {
+            const newName = removeDateFromString(image.path);
+            return dan.push(newName)
+        });
+
+        return res.json(testNaming);
+
+ 
+        
 
         const data = {
             name,
@@ -119,6 +140,7 @@ export default {
             opening_hours,
             user_id,
             open_on_weekends,
+            images
         };
         
         const schema = Yup.object().shape({
@@ -139,14 +161,17 @@ export default {
         await schema.validate(data, {
             abortEarly: false,
         });
-      
-        await getConnection()
-            .createQueryBuilder()
-            .update(Orphanage)
-            .set(data)
-            .where("id = :id", { id })
-            .execute();
                 
-        return res.status(201).json({message: "Orphanage updated", data, imagesFromBody});
+        const orphanage = await orphanagesRepository.findOneOrFail(id, {
+            relations: ['images']
+        }).catch((err => {
+            console.log(err);
+        }));
+
+        if(orphanage) {
+            getRepository(Orphanage).merge(orphanage, data);
+            const results = await getRepository(Orphanage).save(orphanage);
+            return res.json(results);
+        }       
     },
 }
