@@ -1,8 +1,10 @@
-import React, { FormEvent, useState, ChangeEvent } from "react";
+import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { useHistory, Redirect } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { FiPlus } from "react-icons/fi";
 import mapIcon from "../utils/mapIcon";
@@ -21,7 +23,17 @@ interface ImageProps {
 
 export default function CreateOrphanage() {  
   const history = useHistory();
-
+  const notify = () => toast.error('Register didnt work', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    
+  const [showToast, setShowToast] = useState<boolean>();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
   const [ name, setName ] = useState('');
   const [ about, setAbout ] = useState('');
@@ -31,7 +43,7 @@ export default function CreateOrphanage() {
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages ] = useState<string[]>([]);
 
-    function handleMapClick(event: LeafletMouseEvent) {
+  function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
     setPosition({
       latitude: lat,
@@ -78,10 +90,22 @@ export default function CreateOrphanage() {
           'auth-token': localStorage.token
         }
       }
-    );
-
-    history.push('/orphanages/orphanage-created');
+    ).then(res => {
+      history.push('/orphanages/orphanage-created');
+    }).catch(err => {
+      console.log(err.response.data); // get the response
+      // console.log(err.response.status); // status code of the request
+      if(showToast) {
+          setShowToast(false);
+      }
+      setShowToast(true);
+    });
   }
+  useEffect(() => {
+    if(showToast) {
+        notify();
+    }        
+  }, [showToast])
 
 
   if(!localStorage.email) {
@@ -92,6 +116,8 @@ export default function CreateOrphanage() {
 
   return (
     <div id="page-create-orphanage">
+
+      <ToastContainer />
       
       <Sidebar />
 

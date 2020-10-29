@@ -59,8 +59,8 @@ export default {
 
         const schema = Yup.object().shape({
             name: Yup.string().required(),
-            email: Yup.string().required(),
-            password: Yup.string().required()
+            email: Yup.string().email().required(),
+            password: Yup.string().min(4).required()
         });
 
         await schema.validate(data, {
