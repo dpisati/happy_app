@@ -39,8 +39,9 @@ export default function UpdateOrphanage() {
       setAbout(res.data.about);
       setInstructions(res.data.instructions);
       setOpeningHours(res.data.opening_hours);
-      setOpenOnWeekends(res.data.open_on_weekends);
+      setOpenOnWeekends(Boolean(res.data.open_on_weekends));
       setPreviewImages(res.data.images.map((image: ImageProps) => image.url));
+      setImages(res.data.images.map((image: ImageProps) => image.url));
       setPosition({ latitude: res.data.latitude, longitude: res.data.longitude});
     })
   }, [params.id])
@@ -70,23 +71,22 @@ export default function UpdateOrphanage() {
   async function handleSumbmit(event: FormEvent) {
     event.preventDefault();
 
-    // const { latitude, longitude } = position;
-    // const user_id = localStorage.user_id
+    const { latitude, longitude } = position;
+    const user_id = localStorage.user_id
 
-    const data = {
-      name,
-      about,
-      latitude: String(position.latitude), 
-      longitude: String(position.longitude),
-      instructions,
-      opening_hours: openingHours,
-      open_on_weekends: openOnWeekends,
-      user_id: localStorage.user_id,
-      images: images.forEach(image => {
-        images.push(image);
-      })
-
-    }
+    const data = new FormData();
+    data.append('name', name);
+    data.append('about', about);
+    data.append('latitude', String(latitude));
+    data.append('longitude', String(longitude));
+    data.append('instructions', instructions);
+    data.append('opening_hours', openingHours);
+    data.append('open_on_weekends', String(openOnWeekends));
+    data.append('user_id', user_id);
+    
+    images.forEach(image => {
+      data.append('images', image);
+    })
 
     // const data = new FormData();
     // data.append('name', name);

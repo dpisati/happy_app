@@ -1,7 +1,7 @@
-import React, { FormEvent, useState, ChangeEvent, useEffect } from "react";
+import React, { FormEvent, useState, ChangeEvent } from "react";
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
-import { useHistory, Redirect, useParams } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 
 
 import { FiPlus } from "react-icons/fi";

@@ -104,7 +104,7 @@ export default function Dashborad() {
                                 <footer>
                                     <h3>{orphanage.name}</h3>
                                     <div className="edit">
-                                        <Link className="button" to={`/orphanages/create/${orphanage.id}`}>
+                                        <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
                                             <FiEdit3 size={28} color="#15C3D6" />
                                         </Link>
                                         <Link className="button" to={"/"}>

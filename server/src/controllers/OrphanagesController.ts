@@ -4,6 +4,7 @@ import Orphanage from '../models/Orphanage';
 import Image from '../models/Image';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
+import path from 'path';
 
 export default {
     async index(req: Request, res: Response) {
@@ -108,29 +109,24 @@ export default {
             user_id
         } = req.body;
 
+
+
         const orphanagesRepository = getRepository(Orphanage);        
 
         const requestImages = req.files as Express.Multer.File[];
+        
         const images = requestImages.map(image => {
             return { path: image.filename }
         });
 
-        function removeDateFromString(string: string) {
-            return string.substring(14);
+        if(images.length > 0){
+            await getConnection()
+            .createQueryBuilder()
+            .delete()
+            .from(Image)
+            .where("orphanage_id = :id", { id })
+            .execute();
         }
-
-        const dan = []
-
-        const testNaming = images.map(image => {
-            const newName = removeDateFromString(image.path);
-            return dan.push(newName)
-        });
-
-        return res.json(testNaming);
-
- 
-        
-
         const data = {
             name,
             latitude,
@@ -139,7 +135,7 @@ export default {
             instructions,
             opening_hours,
             user_id,
-            open_on_weekends,
+            open_on_weekends: open_on_weekends === 'true',
             images
         };
         
@@ -169,9 +165,9 @@ export default {
         }));
 
         if(orphanage) {
-            getRepository(Orphanage).merge(orphanage, data);
-            const results = await getRepository(Orphanage).save(orphanage);
+            getRepository(Orphanage).merge(orphanage as Orphanage, data);
+            const results = await getRepository(Orphanage).save(orphanage as Orphanage);
             return res.json(results);
-        }       
+        }        
     },
 }
