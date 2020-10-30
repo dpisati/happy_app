@@ -23,7 +23,7 @@ interface ImageProps {
 
 export default function CreateOrphanage() {  
   const history = useHistory();
-  const notify = () => toast.error('Register didnt work', {
+  const notify = (message: string) => toast.error(message, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -33,6 +33,7 @@ export default function CreateOrphanage() {
       progress: undefined,
     });
     
+  const [errors, setErrors] = useState<any>();
   const [showToast, setShowToast] = useState<boolean>();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
   const [ name, setName ] = useState('');
@@ -83,30 +84,36 @@ export default function CreateOrphanage() {
     
     images.forEach(image => {
       data.append('images', image);
-    })
+    });
 
     await api.post('/orphanages', data, {
       headers: {
           'auth-token': localStorage.token
         }
       }
-    ).then(res => {
+    ).then(() => {
       history.push('/orphanages/orphanage-created');
     }).catch(err => {
-      console.log(err.response.data); // get the response
-      // console.log(err.response.status); // status code of the request
+      setErrors(err.response.data.errors);
       if(showToast) {
           setShowToast(false);
       }
       setShowToast(true);
     });
-  }
-  useEffect(() => {
-    if(showToast) {
-        notify();
-    }        
-  }, [showToast])
+  };
 
+  useEffect(() => {
+    if(errors) {
+      for (var key in errors) {
+        if (errors.hasOwnProperty(key)) {
+            let message = String(errors[key]).charAt(0).toUpperCase() + String(errors[key]).slice(1);
+            let finalMessage = message.replace("_", " ");
+            notify(finalMessage);
+        }
+      }
+      setErrors({});
+    }
+  }, [showToast])
 
   if(!localStorage.email) {
     return (

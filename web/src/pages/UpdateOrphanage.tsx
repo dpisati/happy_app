@@ -3,6 +3,8 @@ import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet';
 import { useHistory, Redirect, useParams } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { FiPlus } from "react-icons/fi";
 import mapIcon from "../utils/mapIcon";
@@ -23,6 +25,8 @@ export default function UpdateOrphanage() {
   const params = useParams<OrphanageParams>();
   const history = useHistory();
 
+  const [errors, setErrors] = useState<any>();
+  const [ showToast, setShowToast ] = useState<boolean>();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
   const [ name, setName ] = useState('');
   const [ about, setAbout ] = useState('');
@@ -32,6 +36,16 @@ export default function UpdateOrphanage() {
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages ] = useState<string[]>([]);
 
+  const notify = (message: string) => toast.error(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+  
   
   useEffect(() => {
     api.get(`/orphanages/${params.id}`).then(res => {
@@ -88,27 +102,35 @@ export default function UpdateOrphanage() {
       data.append('images', image);
     })
 
-    // const data = new FormData();
-    // data.append('name', name);
-    // data.append('about', about);
-    // data.append('latitude', String(latitude));
-    // data.append('longitude', String(longitude));
-    // data.append('instructions', instructions);
-    // data.append('opening_hours', openingHours);
-    // data.append('open_on_weekends', String(openOnWeekends));
-    // data.append('user_id', user_id);
-    
-
-
     await api.put(`/orphanages/id/${params.id}`, data, {
       headers: {
           'auth-token': localStorage.token
         }
+      }      
+    ).then(() => {
+      history.push('/dashboard');
+    }).catch(err => {
+      setErrors(err.response.data.errors);
+      console.log(err.response.data.errors)
+      if(showToast) {
+          setShowToast(false);
       }
-    );
-
-    history.push('/dashboard');
+      setShowToast(true);
+    });    
   }
+
+  useEffect(() => {
+    if(errors) {
+      for (var key in errors) {
+        if (errors.hasOwnProperty(key)) {
+            let message = String(errors[key]).charAt(0).toUpperCase() + String(errors[key]).slice(1);
+            let finalMessage = message.replace("_", " ");
+            notify(finalMessage);
+        }
+      }
+      setErrors({});
+    }
+  }, [showToast])
 
 
   if(!localStorage.email) {
@@ -119,7 +141,7 @@ export default function UpdateOrphanage() {
 
   return (
     <div id="page-create-orphanage">
-      
+      <ToastContainer />
       <Sidebar />
 
       <main>
