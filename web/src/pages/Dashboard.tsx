@@ -29,10 +29,17 @@ export default function Dashborad() {
     const [modalIsOpen,setIsOpen] = useState(false);
     const [orphanage ,setOrphanage] = useState<Orphanage>();
     const [orphanages, setOrphanages] = useState([]);
+    const [waitingOrphanages, setWaitingOrphanages] = useState([]);
     
     useEffect(() => {
         api.get(`/orphanages/user/${localStorage.user_id}`).then(res => {
             setOrphanages(res.data);
+        })
+    }, [])
+
+    useEffect(() => {
+        api.get(`/orphanages/user/waiting/${localStorage.user_id}`).then(res => {
+            setWaitingOrphanages(res.data);
         })
     }, [])
 
@@ -128,7 +135,9 @@ export default function Dashborad() {
 
                     <button type="button" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
-                        <div className="alert"></div>
+                        {waitingOrphanages.length > 0 && 
+                            <div className="alert"></div>
+                        }
                     </button>
                 </div>
                 <footer>

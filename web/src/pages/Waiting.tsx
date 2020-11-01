@@ -29,10 +29,12 @@ export default function Waiting() {
     const [modalIsOpen,setIsOpen] = useState(false);
     const [orphanage ,setOrphanage] = useState<Orphanage>();
     const [orphanages, setOrphanages] = useState([]);
+    const [waitingOrphanages, setWaitingOrphanages] = useState([]);
     
     useEffect(() => {
         api.get(`/orphanages/user/waiting/${localStorage.user_id}`).then(res => {
             setOrphanages(res.data);
+            setWaitingOrphanages(res.data);
         })
     }, [])
 
@@ -69,7 +71,7 @@ export default function Waiting() {
     }
 
     function handleToWaitingOrphanage() {
-        history.push('/orphanages/waiting');
+        history.push('/dashboard/waiting');
     }
 
     function handleToOorphanageDetail() {
@@ -129,7 +131,9 @@ export default function Waiting() {
                     
                     <button type="button" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
-                        <div className="alert"></div>
+                        {waitingOrphanages.length > 0 && 
+                            <div className="alert"></div>
+                        }
                     </button>
                 </div>
                 <footer>
