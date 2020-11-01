@@ -27,6 +27,11 @@ export class users1603489042805 implements MigrationInterface {
                 type: 'varchar',
               },
               {
+                name: 'type',
+                type: 'varchar',
+                default: "'user'",
+              },
+              {
                 name: 'createdAt',
                 type: 'datetime',
               }

@@ -23,7 +23,7 @@ interface Orphanage {
 
 Modal.setAppElement('#root');
 
-export default function Dashborad() {
+export default function Waiting() {
     const history = useHistory();
 
     const [modalIsOpen,setIsOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function Dashborad() {
     const [orphanages, setOrphanages] = useState([]);
     
     useEffect(() => {
-        api.get(`/orphanages/user/${localStorage.user_id}`).then(res => {
+        api.get(`/orphanages/user/waiting/${localStorage.user_id}`).then(res => {
             setOrphanages(res.data);
         })
     }, [])
@@ -40,9 +40,14 @@ export default function Dashborad() {
     function openModal(orphanage: Orphanage) {
         setOrphanage(orphanage);
         setIsOpen(true);
-    }     
+    }
+
     function closeModal(){
         setIsOpen(false);
+    }
+
+    function handleToDashboard() {
+        history.push('/dashboard');
     }
     
     function handleDelete() {
@@ -63,12 +68,8 @@ export default function Dashborad() {
         history.push('/orphanages/create');
     }
 
-    function handleToDashboard() {
-        history.push('/dashboard');
-    }
-
     function handleToWaitingOrphanage() {
-        history.push('/dashboard/waiting');
+        history.push('/orphanages/waiting');
     }
 
     function handleToOorphanageDetail() {
@@ -117,15 +118,15 @@ export default function Dashborad() {
                     <button type="button" className="location-icon" onClick={handleToMapPage}>
                         <HiOutlineLocationMarker size={28} color="#0089A5" />
                     </button>
-                    
                     <button type="button" className="add-orphanage-icon" onClick={handleToAddOrphanage}>
                         <FiPlus size={28} color="#FFF" />
                     </button>
-                    
+
+                                        
                     <button type="button" className="add-orphanage-icon" onClick={handleToDashboard}>
                         <FiClipboard size={24} color="#FFF" />
                     </button>
-
+                    
                     <button type="button" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
                         <div className="alert"></div>
@@ -140,7 +141,7 @@ export default function Dashborad() {
 
             <div className="dashboard">
                 <div className="head">
-                    <h1>Registered Orphanages</h1>
+                    <h1>Orphanages waiting approval</h1>
                     {orphanages.length > 0 && <h2>{orphanages.length} Orphanages found</h2>}
                 </div>
 
@@ -176,11 +177,11 @@ export default function Dashborad() {
                                         <h3 onClick={handleToOorphanageDetail}>{orphanage.name}</h3>
                                     </Link>
                                     <div className="edit">
-                                        <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
+                                        {/* <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
                                             <FiEdit3 size={28} color="#15C3D6" />
-                                        </Link>
+                                        </Link> */}
                                         {/* <Link className="button" to={"/dashboard"} onClick={(e) => console.log(orphanage.id)}> */}
-                                        <Link className="button" to={"/dashboard"} onClick={() => openModal(orphanage)}>
+                                        <Link className="button" to={"/dashboard/waiting"} onClick={() => openModal(orphanage)}>
                                             <RiDeleteBin7Line size={28} color="#15C3D6" />
                                         </Link>
                                     </div>

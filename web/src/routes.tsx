@@ -10,6 +10,7 @@ import OrphanageCreated from './pages/OrphanageCreated';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Waiting from './pages/Waiting';
 
 function Routes() {
     return(
@@ -26,7 +27,8 @@ function Routes() {
                 <Route path="/auth/login" component={Login} />
                 <Route path="/auth/register" component={Register} />
                 
-                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/dashboard/waiting" component={Waiting} />
             </Switch>
         </BrowserRouter>
     );

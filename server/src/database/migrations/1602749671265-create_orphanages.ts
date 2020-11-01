@@ -49,6 +49,11 @@ export class createOrphanages1602749671265 implements MigrationInterface {
           {
             name: 'user_id',
             type: 'integer'
+          },
+          {
+            name: 'status',
+            type: 'varchar',
+            default: "'waiting'",
           }
         ]
       }))

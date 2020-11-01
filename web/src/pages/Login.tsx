@@ -50,6 +50,7 @@ export default function Login() {
         await api.post('/api/user/login', data).then((res) => {
             localStorage.setItem('token', res.data.user.token);
             localStorage.setItem('user_id', res.data.user.id);
+            localStorage.setItem('type', res.data.user.type);
             
             history.push('/dashboard');
         }).catch((err) => {

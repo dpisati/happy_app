@@ -4,7 +4,6 @@ import Orphanage from '../models/Orphanage';
 import Image from '../models/Image';
 import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup';
-import path from 'path';
 
 export default {
     async index(req: Request, res: Response) {
@@ -14,7 +13,14 @@ export default {
             relations: ['images']
         });
 
-        return res.json(orphanageView.renderMany(orphanages));
+        const userOrphanages = await 
+            getRepository(Orphanage)
+            .createQueryBuilder("orphanages")
+            .leftJoinAndSelect("orphanages.images", "image")
+            .where("status = :status", { status: "approved" })
+            .getMany();
+
+        return res.json(orphanageView.renderMany(userOrphanages));
     },
 
     async show(req: Request, res: Response) {
@@ -69,6 +75,7 @@ export default {
             opening_hours,
             user_id,
             open_on_weekends: open_on_weekends === 'true',
+            status: 'waiting',
             images
         };
 
@@ -103,7 +110,19 @@ export default {
         const userOrphanages = await 
             getRepository(Orphanage)
             .createQueryBuilder("orphanages")
-            .where("user_id = :id", { id })
+            .where("user_id = :id AND status = :status", { id, status: "approved" })
+            .getMany();
+
+        return res.json(userOrphanages);
+    },
+
+    async userWaiting(req: Request, res: Response) {
+        const { id } = req.params;
+        
+        const userOrphanages = await 
+            getRepository(Orphanage)
+            .createQueryBuilder("orphanages")
+            .where("user_id = :id AND status = :status", { id, status: "waiting" })
             .getMany();
 
         return res.json(userOrphanages);
@@ -121,8 +140,6 @@ export default {
             open_on_weekends,
             user_id
         } = req.body;
-
-
 
         const orphanagesRepository = getRepository(Orphanage);        
 

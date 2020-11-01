@@ -29,6 +29,9 @@ export default class Orphanage {
     
     @Column()
     user_id: number;
+    
+    @Column()
+    status: string;
 
     @OneToMany(() => Image, image => image.orphanage, {
         cascade: ['insert', 'update']
