@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FiPower, FiAlertCircle, FiEdit3,  } from 'react-icons/fi';
+import { FiPower, FiAlertCircle, FiEdit3, FiPlus } from 'react-icons/fi';
 import { HiOutlineLocationMarker} from 'react-icons/hi';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { useHistory, Redirect, Link } from 'react-router-dom';
 import { Map, Marker, TileLayer } from "react-leaflet";
+import Modal from 'react-modal';
 import api from "../services/api";
 
 import mapMarkerImg from '../images/map-marker.svg';
@@ -20,25 +21,58 @@ interface Orphanage {
     longitude: number;
 }
 
+Modal.setAppElement('#root');
+
 export default function Dashborad() {
     const { goBack } = useHistory();
     const history = useHistory();
 
+    const [modalIsOpen,setIsOpen] = useState(false);
+    const [orphanage ,setOrphanage] = useState<Orphanage>();
     const [orphanages, setOrphanages] = useState([]);
-
+    
     useEffect(() => {
         api.get(`/orphanages/user/${localStorage.user_id}`).then(res => {
             setOrphanages(res.data);
         })
     }, [])
 
-    function logOff(){
-        localStorage.clear();
+
+    function openModal(orphanage: Orphanage) {
+        setOrphanage(orphanage);
+        setIsOpen(true);
+    }     
+    function closeModal(){
+        setIsOpen(false);
+    }
+    
+    function handleDelete() {
+        if(orphanage) {
+            api.delete(`/orphanages/id/${orphanage.id}`, {
+                headers: {
+                    'auth-token': localStorage.token
+                  }
+            })
+        }
+    }      
+
+    function handleToMapPage() {
         history.push('/app');
     }
 
-    function handleToMapPage() {
-        history.push('/app')
+    function handleToAddOorphanage() {
+        history.push('/orphanages/create');
+    }
+
+    function handleToOorphanageDetail() {
+        if(orphanage) {
+            history.push(`/orphanages/${orphanage.id}`);
+        }
+    }
+
+    function logOff(){
+        localStorage.clear();
+        history.push('/app');
     }
 
     if(!localStorage.email) {
@@ -49,13 +83,39 @@ export default function Dashborad() {
 
     return(
         <main>
+            {orphanage && (
+                <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Example Modal"
+                className="Modal"
+                overlayClassName="Overlay"
+            >
+                <header>
+                    <h2>Do you want to delete the orphanage: </h2>
+                    <button onClick={closeModal}>X</button>
+                </header>
+
+                <h3>{orphanage.name}</h3>
+                <form>
+                    <button>No</button>
+                    <button onClick={handleDelete}>Yes</button>
+                </form>
+            </Modal>
+            )}
+
+
+
             <aside className="app-sidebar">
                 <img src={mapMarkerImg} alt="Happy" />
                 <div className="middle-icon">
                     <button type="button" className="location-icon" onClick={handleToMapPage}>
                         <HiOutlineLocationMarker size={28} color="#0089A5" />
                     </button>
-
+                    <button type="button" className="add-orphanage-icon" onClick={handleToAddOorphanage}>
+                        <FiPlus size={28} color="#FFF" />
+                    </button>
+                    
                     <button type="button" onClick={goBack}>
                         <FiAlertCircle size={24} color="#FFF" />
                         <div className="alert"></div>
@@ -102,13 +162,16 @@ export default function Dashborad() {
                                     <Marker interactive={false} icon={mapIcon} position={[orphanage.latitude , orphanage.longitude]} />
                                 </Map>
                                 <footer>
-                                    <h3>{orphanage.name}</h3>
+                                    <Link className="button" to={`/orphanages/${orphanage.id}`}>
+                                        <h3 onClick={handleToOorphanageDetail}>{orphanage.name}</h3>
+                                    </Link>
                                     <div className="edit">
                                         <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
                                             <FiEdit3 size={28} color="#15C3D6" />
                                         </Link>
-                                        <Link className="button" to={"/"}>
-                                            <RiDeleteBin7Line size={28} color="#15C3D6"/>
+                                        {/* <Link className="button" to={"/dashboard"} onClick={(e) => console.log(orphanage.id)}> */}
+                                        <Link className="button" to={"/dashboard"} onClick={() => openModal(orphanage)}>
+                                            <RiDeleteBin7Line size={28} color="#15C3D6" />
                                         </Link>
                                     </div>
                                 </footer>

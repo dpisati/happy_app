@@ -35,17 +35,6 @@ export default function UpdateOrphanage() {
   const [ openOnWeekends, setOpenOnWeekends ] = useState(true);
   const [ images, setImages ] = useState<File[]>([]);
   const [ previewImages, setPreviewImages ] = useState<string[]>([]);
-
-  const notify = (message: string) => toast.error(message, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-  });
-  
   
   useEffect(() => {
     api.get(`/orphanages/${params.id}`).then(res => {
@@ -110,8 +99,8 @@ export default function UpdateOrphanage() {
     ).then(() => {
       history.push('/dashboard');
     }).catch(err => {
+      setErrors({});
       setErrors(err.response.data.errors);
-      console.log(err.response.data.errors)
       if(showToast) {
           setShowToast(false);
       }
@@ -120,6 +109,15 @@ export default function UpdateOrphanage() {
   }
 
   useEffect(() => {
+      const notify = (message: string) => toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     if(errors) {
       for (var key in errors) {
         if (errors.hasOwnProperty(key)) {
@@ -128,9 +126,9 @@ export default function UpdateOrphanage() {
             notify(finalMessage);
         }
       }
-      setErrors({});
+      
     }
-  }, [showToast])
+  }, [errors])
 
 
   if(!localStorage.email) {

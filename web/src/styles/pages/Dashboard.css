@@ -1,130 +1,213 @@
 aside.app-sidebar .middle-icon a,
 aside.app-sidebar .middle-icon button {
- width: 48px;
- height: 48px;
- position: relative;
+  width: 48px;
+  height: 48px;
+  position: relative;
 
- border: 0;
+  border: 0;
 
- background: #12AFCB;
- border-radius: 16px;
+  background: #12afcb;
+  border-radius: 16px;
 
- cursor: pointer;
+  cursor: pointer;
 
- transition: background-color 0.2s;
+  transition: background-color 0.2s;
 
- display: flex;
- justify-content: center;
- align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 aside.app-sidebar .middle-icon a:hover,
 aside.app-sidebar .middle-icon button:hover {
- background: #17D6EB;
+  background: #17d6eb;
+}
+
+.add-orphanage-icon {
+  margin-bottom: 15px;
 }
 
 .location-icon {
-    background: #FFD666 !important;
-    margin-bottom: 15px;
+  background: #ffd666 !important;
+  margin-bottom: 15px;
 }
 
 .location-icon:hover {
-    background: rgb(255, 239, 194) !important;
+  background: rgb(255, 239, 194) !important;
 }
 
 .alert {
-    position: absolute;
-    height: 14px;
-    width: 14px;
-    background: #FFD666;
-    border-radius: 50%;
-    border: 2px solid #12AFCB;
-    right: 7px;
-    top: 9px;
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  background: #ffd666;
+  border-radius: 50%;
+  border: 2px solid #12afcb;
+  right: 7px;
+  top: 9px;
 }
 
-.dashboard {    
-    /* margin-left: 95px; */
-    /* padding-left: 50px 100px; */
-    width: 80%;
-    padding-top: 65px;
-    padding-left: 95px;
-    margin: auto;
+.dashboard {
+  /* margin-left: 95px; */
+  /* padding-left: 50px 100px; */
+  width: 80%;
+  padding-top: 65px;
+  padding-left: 95px;
+  margin: auto;
 }
 
 .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #4D6F80;
-    padding: 30px 0px;
-    border-bottom: 1px solid rgb(108, 152, 173, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #4d6f80;
+  padding: 30px 0px;
+  border-bottom: 1px solid rgb(108, 152, 173, 0.2);
 }
 
 .head h2 {
-    margin-bottom: -5px;
+  margin-bottom: -5px;
 }
 
 .orphanages {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 78px;
 }
 
 .map-container-user {
-    width: 45%;
-    
-    margin-top: 64px;
-    background: #FFF;
-    border: 1px solid #B3DAE2;
-    border-radius: 20px;
-  }
-  
-  .map-container-user footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0px 30px;
-    padding: 20px 0;
-    text-align: center;
-    color: #4D6F80;
-  }
-  
-  .map-container-user .leaflet-container {
-    border-bottom: 1px solid #DDE3F0;
-    border-radius: 20px 20px 0px 0px;
-  }
+  width: 45%;
 
-  .edit {
-      display: flex;
-  }
+  margin-top: 64px;
+  background: #fff;
+  border: 1px solid #b3dae2;
+  border-radius: 20px;
+}
 
-  .edit .button {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      border: none;
-      margin-left: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #EBF2F5;
-  }
+.map-container-user footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 30px;
+  padding: 20px 0;
+  text-align: center;
+  color: #4d6f80;
+}
 
-  .edit .button:hover {
-    background: rgb(211, 241, 255);
-  }
+.map-container-user .leaflet-container {
+  border-bottom: 1px solid #dde3f0;
+  border-radius: 20px 20px 0px 0px;
+}
 
-  footer h3 {
-      cursor: pointer;
-  }
+.edit {
+  display: flex;
+}
 
-  .no-orphanages {
-      width: 100%;
-      height: 60vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  }
+.edit .button {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ebf2f5;
+}
+
+.edit .button:hover {
+  background: rgb(211, 241, 255);
+}
+
+footer a {
+  cursor: pointer;
+  text-decoration: none;
+}
+footer a:visited {
+  color: #4d6f80;
+}
+
+.no-orphanages {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Modal {
+  outline: none;
+  width: 70%;
+  height: auto;
+  max-width: 700px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background-color: #ebf2f5;
+  z-index: 1100;
+  opacity: 1;
+  border-radius: 20px;
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(99, 99, 99, 0.8);
+  z-index: 1100;
+}
+
+.Modal header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 38px;
+}
+
+.Modal header button {
+  margin: 0;
+  color: #4d6f80;
+}
+
+.Modal h2 {
+  color: #4d6f80;
+}
+.Modal h3 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: #4d6f80;
+  margin-bottom: 60px;
+}
+
+.Modal form {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 38px;
+}
+
+.Modal form button {
+  width: 45%;
+  margin: 0;
+}
+
+.Modal form button:first-child {
+  background: #dfe0e0;
+  color: #4d6f80;
+}
+
+.Modal form button:first-child:hover {
+  background: #c4c4c4;
+  color: #4d6f80;
+}

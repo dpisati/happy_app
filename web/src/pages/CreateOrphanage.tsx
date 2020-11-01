@@ -23,16 +23,6 @@ interface ImageProps {
 
 export default function CreateOrphanage() {  
   const history = useHistory();
-  const notify = (message: string) => toast.error(message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    
   const [errors, setErrors] = useState<any>();
   const [showToast, setShowToast] = useState<boolean>();
   const [ position, setPosition ] = useState({ latitude: 0, longitude: 0})
@@ -94,6 +84,7 @@ export default function CreateOrphanage() {
     ).then(() => {
       history.push('/orphanages/orphanage-created');
     }).catch(err => {
+      setErrors({});
       setErrors(err.response.data.errors);
       if(showToast) {
           setShowToast(false);
@@ -102,7 +93,17 @@ export default function CreateOrphanage() {
     });
   };
 
-  useEffect(() => {
+  useEffect(() => {   
+    const notify = (message: string) => toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+     
     if(errors) {
       for (var key in errors) {
         if (errors.hasOwnProperty(key)) {
@@ -111,9 +112,8 @@ export default function CreateOrphanage() {
             notify(finalMessage);
         }
       }
-      setErrors({});
     }
-  }, [showToast])
+  }, [errors])
 
   if(!localStorage.email) {
     return (

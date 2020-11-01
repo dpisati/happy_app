@@ -12,6 +12,7 @@ routes.get("/orphanages", OrphanagesController.index);
 routes.get("/orphanages/:id", OrphanagesController.show);
 routes.post("/orphanages", verifyToken, upload.array('images'), OrphanagesController.create);
 routes.put("/orphanages/id/:id", verifyToken, upload.array('images'), OrphanagesController.update);
+routes.delete("/orphanages/id/:id", verifyToken, upload.array('images'), OrphanagesController.delete);
 
 routes.get("/orphanages/user/:id", OrphanagesController.user);
 

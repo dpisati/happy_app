@@ -27,6 +27,19 @@ export default {
 
         return res.json(orphanageView.render(orphanage));
     },
+    
+    async delete(req: Request, res: Response) {
+        const { id } = req.params;
+
+        await getConnection()
+            .createQueryBuilder()
+            .delete()
+            .from(Orphanage)
+            .where("id = :id", { id })
+            .execute();
+
+        return res.json({message: "Orphanage deleted successfully"});
+    },
 
     async create(req: Request, res: Response) {
         const {

@@ -28,8 +28,8 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleToMapPage() {
-        history.push('/app')
+    function handleToLogin() {
+        history.push('/auth/login')
     }
 
     async function handleSumbmit(event: FormEvent) {
@@ -78,7 +78,7 @@ export default function Register() {
 
             <div className="right">
                 <header>
-                    <button onClick={handleToMapPage}>
+                    <button onClick={handleToLogin}>
                         <FiArrowLeft size={20} color="15C3D6"/>
                     </button>
                 </header>
