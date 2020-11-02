@@ -162,7 +162,7 @@ footer a:visited {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(99, 99, 99, 0.8);
+  background-color: rgba(185, 185, 185, 0.6);
   z-index: 1100;
 }
 
@@ -210,4 +210,8 @@ footer a:visited {
 .Modal form button:first-child:hover {
   background: #c4c4c4;
   color: #4d6f80;
+}
+
+.active {
+  border: 3px solid #fff !important;
 }

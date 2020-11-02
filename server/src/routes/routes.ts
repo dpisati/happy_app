@@ -8,11 +8,15 @@ import OrphanagesController from '../controllers/OrphanagesController';
 const routes = Router();
 const upload = multer(uploadConfig);
 
+routes.get("/orphanages/admin", verifyToken, OrphanagesController.admin);
+routes.put("/orphanages/approved/:id", OrphanagesController.approved);
+
 routes.get("/orphanages", OrphanagesController.index);
 routes.get("/orphanages/:id", OrphanagesController.show);
 routes.put("/orphanages/id/:id", verifyToken, upload.array('images'), OrphanagesController.update);
 routes.post("/orphanages", verifyToken, upload.array('images'), OrphanagesController.create);
 routes.delete("/orphanages/id/:id", verifyToken, upload.array('images'), OrphanagesController.delete);
+
 
 routes.get("/orphanages/user/:id", OrphanagesController.user);
 routes.get("/orphanages/user/waiting/:id", OrphanagesController.userWaiting);

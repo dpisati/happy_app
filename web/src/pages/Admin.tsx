@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiPower, FiAlertCircle, FiPlus, FiClipboard, FiCheckCircle } from 'react-icons/fi';
+import { FiPower, FiAlertCircle, FiPlus, FiClipboard, FiCheckCircle, FiEdit3 } from 'react-icons/fi';
 import { useHistory, Redirect, Link } from 'react-router-dom';
 import { HiOutlineLocationMarker} from 'react-icons/hi';
 import { Map, Marker, TileLayer } from "react-leaflet";
@@ -23,26 +23,28 @@ interface Orphanage {
 
 Modal.setAppElement('#root');
 
-export default function Waiting() {
+export default function Admin() {
     const history = useHistory();
 
-    const [modalIsOpen,setIsOpen] = useState(false);
-    const [orphanage ,setOrphanage] = useState<Orphanage>();
-    const [orphanages, setOrphanages] = useState([]);
-    const [waitingOrphanages, setWaitingOrphanages] = useState([]);
+    const [ modalIsOpen, setIsOpen ] = useState(false);
+    const [ modelType, setModalType ] = useState('');
+    const [ orphanage ,setOrphanage ] = useState<Orphanage>();
+    const [ orphanages, setOrphanages ] = useState([]);
+    const [ waitingOrphanages, setWaitingOrphanages ] = useState([]);
     
     useEffect(() => {
-        api.get(`/orphanages/user/waiting/${localStorage.user_id}`).then(res => {
+        api.get('/orphanages/admin', {
+            headers: {
+                'auth-token': localStorage.token
+              }
+            }).then(res => {
             setOrphanages(res.data);
             setWaitingOrphanages(res.data);
         })
     }, [])
-    
-    function handleToApproval() {
-        history.push('/orphanages/admin');
-    }
 
-    function openModal(orphanage: Orphanage) {
+    function openModal(orphanage: Orphanage, type: string) {
+        setModalType(type);
         setOrphanage(orphanage);
         setIsOpen(true);
     }
@@ -64,6 +66,12 @@ export default function Waiting() {
             })
         }
     }      
+    
+    function handleApproved() {
+        if(orphanage) {
+            api.put(`/orphanages/approved/${orphanage.id}`);
+        }
+    }   
 
     function handleToMapPage() {
         history.push('/app');
@@ -77,10 +85,14 @@ export default function Waiting() {
         history.push('/dashboard/waiting');
     }
 
-    function handleToOorphanageDetail() {
+    function handleToOrphanageDetail() {
         if(orphanage) {
             history.push(`/orphanages/${orphanage.id}`);
         }
+    }
+        
+    function handleToApproval() {
+        history.push('/orphanages/admin');
     }
 
     function logOff(){
@@ -96,11 +108,10 @@ export default function Waiting() {
 
     return(
         <main>
-            {orphanage && (
+            {orphanage && modelType === "delete" && (
                 <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                contentLabel="Example Modal"
                 className="Modal"
                 overlayClassName="Overlay"
             >
@@ -117,6 +128,26 @@ export default function Waiting() {
             </Modal>
             )}
 
+            {orphanage && modelType === "approve" && (
+                <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                className="Modal"
+                overlayClassName="Overlay"
+            >
+                <header>
+                    <h2>Do you want to approve the orphanage: </h2>
+                    <button onClick={closeModal}>X</button>
+                </header>
+
+                <h3>{orphanage.name}</h3>
+                <form>
+                    <button>No</button>
+                    <button onClick={handleApproved}>Yes</button>
+                </form>
+            </Modal>
+            )}
+
             <aside className="app-sidebar">
                 <img src={mapMarkerImg} alt="Happy" />
                 <div className="middle-icon">
@@ -128,9 +159,8 @@ export default function Waiting() {
                         <FiPlus size={28} color="#FFF" />
                     </button>
 
-                                        
                     {localStorage.type === "admin" && (
-                        <button type="button" className="add-orphanage-icon" onClick={handleToApproval}>
+                        <button type="button" className="add-orphanage-icon active" onClick={handleToApproval}>
                             <FiCheckCircle size={24} color="#FFF" />
                         </button>
                     )}
@@ -139,12 +169,15 @@ export default function Waiting() {
                         <FiClipboard size={24} color="#FFF" />
                     </button>
                     
+                    {localStorage.type !== "admin" && (
                     <button type="button" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
                         {waitingOrphanages.length > 0 && 
                             <div className="alert"></div>
                         }
                     </button>
+                    ) }
+
                 </div>
                 <footer>
                     <button type="button" onClick={logOff}>
@@ -155,7 +188,7 @@ export default function Waiting() {
 
             <div className="dashboard">
                 <div className="head">
-                    <h1>Orphanages waiting approval</h1>
+                    <h1>Orphanages to be approved</h1>
                     {orphanages.length > 0 && <h2>{orphanages.length} Orphanages found</h2>}
                 </div>
 
@@ -188,14 +221,18 @@ export default function Waiting() {
                                 </Map>
                                 <footer>
                                     <Link className="button" to={`/orphanages/${orphanage.id}`}>
-                                        <h3 onClick={handleToOorphanageDetail}>{orphanage.name}</h3>
+                                        <h3 onClick={handleToOrphanageDetail}>{orphanage.name}</h3>
                                     </Link>
                                     <div className="edit">
-                                        {/* <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
+
+                                        <Link className="button" to={`/orphanages/id/${orphanage.id}`}>
                                             <FiEdit3 size={28} color="#15C3D6" />
-                                        </Link> */}
-                                        {/* <Link className="button" to={"/dashboard"} onClick={(e) => console.log(orphanage.id)}> */}
-                                        <Link className="button active" to={"/dashboard/waiting"} onClick={() => openModal(orphanage)}>
+                                        </Link>
+                                        <Link className="button" to={'/orphanages/admin'} onClick={() => openModal(orphanage, "approve")}>
+                                            <FiCheckCircle size={28} color="#15C3D6" />
+                                        </Link>
+                                        
+                                        <Link className="button" to={'/orphanages/admin'} onClick={() => openModal(orphanage, "delete")}>
                                             <RiDeleteBin7Line size={28} color="#15C3D6" />
                                         </Link>
                                     </div>

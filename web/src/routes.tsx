@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Waiting from './pages/Waiting';
+import Admin from './pages/Admin';
 
 function Routes() {
     return(
@@ -20,6 +21,7 @@ function Routes() {
                 <Route path="/app" component={OrphanagesMap} />
 
                 <Route path="/orphanages/create" exact component={CreateOrphanage} />
+                <Route path="/orphanages/admin" exact component={Admin} />
                 <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
                 <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
                 <Route path="/orphanages/:id" component={Orphanage} />

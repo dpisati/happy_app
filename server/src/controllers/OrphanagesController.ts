@@ -128,6 +128,31 @@ export default {
         return res.json(userOrphanages);
     },
 
+    async admin(req: Request, res: Response) {   
+        const userOrphanages = await 
+            getRepository(Orphanage)
+            .createQueryBuilder("orphanages")
+            .where("status = :status", { status: "waiting" })
+            .getMany();
+
+        return res.json(userOrphanages);
+    },
+
+    async approved(req: Request, res: Response) {   
+        const { id } = req.params;
+
+        const approved = await getConnection()
+        .createQueryBuilder()
+        .update(Orphanage)
+        .set({ 
+            status: "approved"
+        })
+        .where("id = :id", { id })
+        .execute();
+
+        return res.json({approved, message: "Approved"});
+    },
+
     async update(req: Request, res: Response) {
         const { id } = req.params;
         const {

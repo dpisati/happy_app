@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiPower, FiAlertCircle, FiEdit3, FiPlus, FiClipboard } from 'react-icons/fi';
+import { FiPower, FiAlertCircle, FiEdit3, FiPlus, FiClipboard, FiCheckCircle } from 'react-icons/fi';
 import { useHistory, Redirect, Link } from 'react-router-dom';
 import { HiOutlineLocationMarker} from 'react-icons/hi';
 import { Map, Marker, TileLayer } from "react-leaflet";
@@ -84,6 +84,10 @@ export default function Dashborad() {
         }
     }
 
+    function handleToApproval() {
+        history.push('/orphanages/admin');
+    }
+
     function logOff(){
         localStorage.clear();
         history.push('/app');
@@ -124,21 +128,29 @@ export default function Dashborad() {
                     <button type="button" className="location-icon" onClick={handleToMapPage}>
                         <HiOutlineLocationMarker size={28} color="#0089A5" />
                     </button>
-                    
+
                     <button type="button" className="add-orphanage-icon" onClick={handleToAddOrphanage}>
                         <FiPlus size={28} color="#FFF" />
                     </button>
-                    
-                    <button type="button" className="add-orphanage-icon" onClick={handleToDashboard}>
+                                                            
+                    {localStorage.type === "admin" && (
+                        <button type="button" className="add-orphanage-icon" onClick={handleToApproval}>
+                            <FiCheckCircle size={24} color="#FFF" />
+                        </button>
+                    )}
+
+                    <button type="button" className="add-orphanage-icon active" onClick={handleToDashboard}>
                         <FiClipboard size={24} color="#FFF" />
                     </button>
 
+                    {localStorage.type !== "admin" && (
                     <button type="button" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
                         {waitingOrphanages.length > 0 && 
                             <div className="alert"></div>
                         }
                     </button>
+                    ) }
                 </div>
                 <footer>
                     <button type="button" onClick={logOff}>
