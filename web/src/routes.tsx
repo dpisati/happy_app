@@ -7,6 +7,7 @@ import Orphanage from './pages/Orphanage';
 import CreateOrphanage from './pages/CreateOrphanage';
 import UpdateOrphanage from './pages/UpdateOrphanage';
 import OrphanageCreated from './pages/OrphanageCreated';
+import OrphanageDeleted from './pages/OrphanageDeleted';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -24,6 +25,7 @@ function Routes() {
                 <Route path="/orphanages/admin" exact component={Admin} />
                 <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
                 <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
+                <Route path="/orphanages/orphanage-deleted" component={OrphanageDeleted} />
                 <Route path="/orphanages/:id" component={Orphanage} />
 
                 <Route path="/auth/login" component={Login} />

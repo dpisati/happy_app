@@ -58,7 +58,8 @@ export default function Dashborad() {
                 headers: {
                     'auth-token': localStorage.token
                   }
-            })
+            });
+            history.push('/orphanages/orphanage-deleted');
         }
     }      
 
