@@ -14,7 +14,7 @@ import { UserContext } from '../context/UserContext';
 toast.configure();
 
 export default function Login() {
-    const {user, setUser} = useContext(UserContext);
+    const { setUser} = useContext(UserContext);
 
     const history = useHistory();
     const notify = () => toast.error('Wrong E-mail or Password', {
@@ -132,7 +132,7 @@ export default function Login() {
 
                     <button type="submit">
                         Enter
-                    </button>                    
+                    </button>
                 </form>
             </div>
         </main>

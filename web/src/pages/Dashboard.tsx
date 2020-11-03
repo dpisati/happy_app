@@ -25,7 +25,7 @@ interface Orphanage {
 Modal.setAppElement('#root');
 
 export default function Dashborad() {
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
 
     const history = useHistory();
 
@@ -166,7 +166,7 @@ export default function Dashborad() {
             <div className="dashboard">
                 <div className="head">
                     <h1>Registered Orphanages</h1>
-                    <h2>email {user.email}</h2>
+                    <h2>{user.token}</h2>
                     {orphanages.length > 0 && <h2>{orphanages.length} Orphanages found</h2>}
                 </div>
 

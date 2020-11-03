@@ -22,6 +22,7 @@ const userDefaultValue = {
 };  
 
 export const UserContext = createContext(userDefaultValue);
+// export const UserContext = createContext({});
 
 export const UserProvider = (props: IProviderProps) => {
     const [user, setUser] = useState(userDefaultValue.user);

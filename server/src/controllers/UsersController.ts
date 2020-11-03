@@ -90,7 +90,17 @@ export default {
             const match = await bcrypt.compare(password, user.password);
             if(match) {
                 const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET as string);
-                return res.status(200).header('auth-token', token).json({message: "Correct Password", user: {name: user.name, id: user.id, type: user.type, token }});
+                return res.status(200)
+                    .header('auth-token', token)
+                    .json({
+                            message: "Correct Password", 
+                            user: {
+                                name: user.name, 
+                                id: user.id, 
+                                type: user.type, 
+                                email: user.email, 
+                                token 
+                            }});
             }
             return res.status(400).json({message: "Password or email not valid"});
         }
