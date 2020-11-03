@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FiPower, FiAlertCircle, FiEdit3, FiPlus, FiClipboard, FiCheckCircle } from 'react-icons/fi';
 import { useHistory, Redirect, Link } from 'react-router-dom';
 import { HiOutlineLocationMarker} from 'react-icons/hi';
@@ -13,6 +13,7 @@ import mapIcon from "../utils/mapIcon";
 
 import '../styles/components/Sidebar.css';
 import '../styles/pages/Dashboard.css';
+import { UserContext } from '../context/UserContext';
 
 interface Orphanage {
     id: number;
@@ -24,6 +25,8 @@ interface Orphanage {
 Modal.setAppElement('#root');
 
 export default function Dashborad() {
+    const {user, setUser} = useContext(UserContext);
+
     const history = useHistory();
 
     const [modalIsOpen,setIsOpen] = useState(false);
@@ -163,6 +166,7 @@ export default function Dashborad() {
             <div className="dashboard">
                 <div className="head">
                     <h1>Registered Orphanages</h1>
+                    <h2>email {user.email}</h2>
                     {orphanages.length > 0 && <h2>{orphanages.length} Orphanages found</h2>}
                 </div>
 

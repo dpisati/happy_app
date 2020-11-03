@@ -140,7 +140,7 @@ export default function Waiting() {
                         <FiClipboard size={24} color="#FFF" />
                     </button>
                     
-                    <button type="button" onClick={handleToWaitingOrphanage}>
+                    <button type="button" className="active" onClick={handleToWaitingOrphanage}>
                         <FiAlertCircle size={24} color="#FFF" />
                         {waitingOrphanages.length > 0 && 
                             <div className="alert"></div>
@@ -196,7 +196,7 @@ export default function Waiting() {
                                             <FiEdit3 size={28} color="#15C3D6" />
                                         </Link> */}
                                         {/* <Link className="button" to={"/dashboard"} onClick={(e) => console.log(orphanage.id)}> */}
-                                        <Link className="button active" to={"/dashboard/waiting"} onClick={() => openModal(orphanage)}>
+                                        <Link className="button" to={"/dashboard/waiting"} onClick={() => openModal(orphanage)}>
                                             <RiDeleteBin7Line size={28} color="#15C3D6" />
                                         </Link>
                                     </div>

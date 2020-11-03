@@ -1,4 +1,4 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, FormEvent, useEffect, useContext } from 'react';
 
 import fullLogo from '../images/happyFullLogo.svg';
 import { FiArrowLeft } from 'react-icons/fi';
@@ -9,9 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/pages/login.css';
 import api from '../services/api';
 
+import { UserContext } from '../context/UserContext';
+
 toast.configure();
 
 export default function Login() {
+    const {user, setUser} = useContext(UserContext);
+
     const history = useHistory();
     const notify = () => toast.error('Wrong E-mail or Password', {
         position: "top-right",
@@ -48,9 +52,16 @@ export default function Login() {
         localStorage.setItem('email', email as string);
         
         await api.post('/api/user/login', data).then((res) => {
-            localStorage.setItem('token', res.data.user.token);
             localStorage.setItem('user_id', res.data.user.id);
+            localStorage.setItem('token', res.data.user.token);
             localStorage.setItem('type', res.data.user.type);
+            const resUser = {
+                user_id: res.data.user.id,
+                email: res.data.user.email,
+                token: res.data.user.token,
+                type: res.data.user.type
+            }
+            setUser(resUser);
             
             history.push('/dashboard');
         }).catch((err) => {

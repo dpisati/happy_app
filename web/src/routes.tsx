@@ -13,26 +13,29 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Waiting from './pages/Waiting';
 import Admin from './pages/Admin';
+import { UserProvider } from './context/UserContext';
 
 function Routes() {
     return(
         <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={Landing} />
-                <Route path="/app" component={OrphanagesMap} />
+                <UserProvider>
+                    <Route path="/" exact component={Landing} />
+                    <Route path="/app" component={OrphanagesMap} />
 
-                <Route path="/orphanages/create" exact component={CreateOrphanage} />
-                <Route path="/orphanages/admin" exact component={Admin} />
-                <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
-                <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
-                <Route path="/orphanages/orphanage-deleted" component={OrphanageDeleted} />
-                <Route path="/orphanages/:id" component={Orphanage} />
+                    <Route path="/orphanages/create" exact component={CreateOrphanage} />
+                    <Route path="/orphanages/admin" exact component={Admin} />
+                    <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
+                    <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
+                    <Route path="/orphanages/orphanage-deleted" component={OrphanageDeleted} />
+                    <Route path="/orphanages/:id" component={Orphanage} />
 
-                <Route path="/auth/login" component={Login} />
-                <Route path="/auth/register" component={Register} />
-                
-                <Route path="/dashboard" exact component={Dashboard} />
-                <Route path="/dashboard/waiting" component={Waiting} />
+                    <Route path="/auth/login" component={Login} />
+                    <Route path="/auth/register" component={Register} />
+                    
+                    <Route path="/dashboard" exact component={Dashboard} />
+                    <Route path="/dashboard/waiting" component={Waiting} />
+                </UserProvider>
             </Switch>
         </BrowserRouter>
     );

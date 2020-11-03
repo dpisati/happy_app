@@ -21,11 +21,19 @@ interface Orphanage {
     longitude: number;
 }
 
+interface User {
+    id: number;
+    name: string;
+    email: string;
+    type: string;
+}
+
 Modal.setAppElement('#root');
 
 export default function Admin() {
     const history = useHistory();
-
+    
+    // const [ user, setUser ] = useState<User>();
     const [ modalIsOpen, setIsOpen ] = useState(false);
     const [ modelType, setModalType ] = useState('');
     const [ orphanage ,setOrphanage ] = useState<Orphanage>();
