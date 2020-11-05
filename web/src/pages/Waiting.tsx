@@ -62,7 +62,7 @@ export default function Waiting() {
                     'auth-token': localStorage.token
                   }
             });
-            history.push('/orphanages/orphanage-deleted');
+            history.push('/orphanage/orphanage-deleted');
         }
     }      
 

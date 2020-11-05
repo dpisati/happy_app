@@ -26,9 +26,9 @@ function Routes() {
                     <Route path="/orphanages/create" exact component={CreateOrphanage} />
                     <Route path="/orphanages/admin" exact component={Admin} />
                     <Route path="/orphanages/id/:id"  component={UpdateOrphanage} />
-                    <Route path="/orphanages/orphanage-created" component={OrphanageCreated} />
-                    <Route path="/orphanages/orphanage-deleted" component={OrphanageDeleted} />
                     <Route path="/orphanages/:id" component={Orphanage} />
+                    <Route path="/orphanage/orphanage-created" exact component={OrphanageCreated} />
+                    <Route path="/orphanage/orphanage-deleted" exact component={OrphanageDeleted} />
 
                     <Route path="/auth/login" component={Login} />
                     <Route path="/auth/register" component={Register} />

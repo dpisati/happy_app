@@ -14,9 +14,9 @@ type UserContextState = {
 const userDefaultValue = {
     user: {
         user_id: 0,
-        email: "dasas@gmail.com",
-        type: "user",
-        token: "aaaaa"
+        email: "",
+        type: "",
+        token: ""
     },
     setUser: (user: UserContextState) => {} // noop default callback
 };  

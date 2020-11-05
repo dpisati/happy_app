@@ -36,7 +36,7 @@ export default function Dashborad() {
     
     useEffect(() => {
         api.get(`/orphanages/user/${localStorage.user_id}`).then(res => {
-            setOrphanages(res.data);
+            setOrphanages(res.data);            
         })
     }, [])
 
@@ -62,7 +62,7 @@ export default function Dashborad() {
                     'auth-token': localStorage.token
                   }
             });
-            history.push('/orphanages/orphanage-deleted');
+            history.push('/orphanage/orphanage-deleted');
         }
     }      
 
@@ -166,7 +166,7 @@ export default function Dashborad() {
             <div className="dashboard">
                 <div className="head">
                     <h1>Registered Orphanages</h1>
-                    <h2>{user.token}</h2>
+                    <h2>{user.email}</h2>
                     {orphanages.length > 0 && <h2>{orphanages.length} Orphanages found</h2>}
                 </div>
 

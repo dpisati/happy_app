@@ -82,7 +82,7 @@ export default function CreateOrphanage() {
         }
       }
     ).then(() => {
-      history.push('/orphanages/orphanage-created');
+      history.push('/orphanage/orphanage-created');
     }).catch(err => {
       setErrors({});
       setErrors(err.response.data.errors);

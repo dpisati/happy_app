@@ -13,12 +13,12 @@ export default function OrphanageCreated() {
     }
 
     return (
-        <div className="container">
+        <div className="container-created">
             <div className="hero">
                 <div className="left">
                     <h1>Yaaaay!</h1>
                     <p>Your register is created successfully! Now kids will be waiting for you</p>
-                    <button className="confirm-button" type="submit" onClick={handleToMapPage}>
+                    <button className="confirm-button-created" type="submit" onClick={handleToMapPage}>
                         Back to map
                     </button>
                 </div>

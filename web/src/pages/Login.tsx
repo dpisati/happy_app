@@ -9,12 +9,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../styles/pages/login.css';
 import api from '../services/api';
 
-import { UserContext } from '../context/UserContext';
+// import { UserContext } from '../context/UserContext';
 
 toast.configure();
 
 export default function Login() {
-    const { setUser} = useContext(UserContext);
+    // const { setUser } = useContext(UserContext);
 
     const history = useHistory();
     const notify = () => toast.error('Wrong E-mail or Password', {
@@ -55,13 +55,13 @@ export default function Login() {
             localStorage.setItem('user_id', res.data.user.id);
             localStorage.setItem('token', res.data.user.token);
             localStorage.setItem('type', res.data.user.type);
-            const resUser = {
-                user_id: res.data.user.id,
-                email: res.data.user.email,
-                token: res.data.user.token,
-                type: res.data.user.type
-            }
-            setUser(resUser);
+            // const resUser = {
+            //     user_id: res.data.user.id,
+            //     email: res.data.user.email,
+            //     token: res.data.user.token,
+            //     type: res.data.user.type
+            // }
+            // setUser(resUser);
             
             history.push('/dashboard');
         }).catch((err) => {
@@ -74,12 +74,18 @@ export default function Login() {
         });
     }
 
-    useEffect(() => {
-        if(localStorage.password) {
-            setEmail(localStorage.email);
-            setPassword(localStorage.password);
-        }
-    }, [])
+    // useEffect(() => {
+    //     if(localStorage.password) {
+    //         setEmail(localStorage.email);
+    //         setPassword(localStorage.password);
+    //         setUser({
+    //             user_id: localStorage.user_id,
+    //             email: localStorage.email,
+    //             token: localStorage.token,
+    //             type: localStorage.type
+    //         })
+    //     }
+    // }, [])
 
     useEffect(() => {
         if(showToast) {

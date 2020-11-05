@@ -72,7 +72,7 @@ export default function Admin() {
                     'auth-token': localStorage.token
                   }
             });
-            history.push('/orphanages/orphanage-deleted');
+            history.push('/orphanage/orphanage-deleted');
         }
     }      
     
