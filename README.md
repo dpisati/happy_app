@@ -21,6 +21,8 @@
 - [How to use](#how-to-use)
 - [How to contribute](#how-to-contribute)
 
+<br>
+
 <a id="about"></a>
 
 ## :bookmark: About
@@ -29,6 +31,7 @@
 
 This application was made during the <strong>Next Level Week</strong> promoted by [Rocketseat](https://rocketseat.com.br/). The app was made to help people willing to make a good action, visiting an orphanage to support the community. This app will show orphanages nearby. You can also create your own account and add an orphanage that wasn't listed. This registration will be waiting for the administrator to approve. Once approved, the orphanage will be shown to everyone. While awaiting approval, you can edit the info as much you wish.
 
+<br>
 
 <a id="functionalities"></a>
 
@@ -73,6 +76,8 @@ The project is made with:
 - [Multer](https://github.com/expressjs/multer)
 - [Yup](https://github.com/jquense/yup)
 
+<br>
+
 <a id="preview-web"></a>
 
 ## :heavy_check_mark: :computer: Web
@@ -81,6 +86,8 @@ The project is made with:
     <img alt="Web" src=".github/happy_web.gif" width="900px">
 </h1>
 
+<br>
+
 <a id="preview-mobile"></a>
 
 ## :heavy_check_mark: :iphone: Mobile
@@ -88,6 +95,8 @@ The project is made with:
 <h1 align="center">
     <img alt="Mobile Detail" src=".github/happy_mobile.gif" width="900px">
 </h1>
+
+<br>
 
 <a id="how-to-use"></a>
 
@@ -147,6 +156,8 @@ Content:
 ```text
 REACT_APP_MAPBOX_TOKEN=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+<br>
 
 <a id="how-to-contribute"></a>
 
