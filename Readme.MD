@@ -1,7 +1,7 @@
 <h3 align="center">
     <img src="./.github/happy.png" alt="Happy" />
     <br><br>
-    <b>Happy, find the closest orphanage!</b>  
+    <b>Happy, find an orphanage nearby.</b>  
     <br>
 </h3>
 
