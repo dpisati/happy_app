@@ -34,9 +34,9 @@ This application was made during the <strong>Next Level Week</strong> promoted b
 
 ## :fire: Functionalities
 
-- User privileges: admin / user
+<br>
 
--Users:
+- Users:
   - [x] View orphanages.
   - [x] Register orphanages.
   - [x] View registered orphanages by user waiting for approval.
@@ -44,13 +44,15 @@ This application was made during the <strong>Next Level Week</strong> promoted b
   - [x] Delete orphanage while waiting approval.
   - [x] View registered orphanages accepted by user.
 
--Admin:
+- Admin:
   - [x] View orphanages.
   - [x] Register new orphanages.
   - [x] View all registered orphanages waiting for approval.
   - [x] View all registered orphanages accepted.
   - [x] Accept / Deny orphanages registrations.
   - [x] Delete orphanages.
+
+<br>
 
 <a id="technologies"></a>
 
