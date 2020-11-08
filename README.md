@@ -32,7 +32,7 @@ This application was made during the <strong>Next Level Week</strong> promoted b
 
 <a id="functionalities"></a>
 
-## :fire: Functionalities
+## :white_check_mark: Functionalities
 
 <br>
 
